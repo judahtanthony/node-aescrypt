@@ -23,5 +23,6 @@
     "decrypt"
   ],
   "author": "Judah Anthony",
+  "repository": "github:judahtanthony/node-aescrypt",
   "license": "MIT"
 }
