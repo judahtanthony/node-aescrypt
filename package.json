@@ -1,0 +1,27 @@
+{
+  "name": "node-aescrypt",
+  "version": "1.0.0",
+  "description": "A node implementation of the AES Crypt <https://www.aescrypt.com/> file encryption format.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "command-line-args": "^5.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"No tests yet.\";"
+  },
+  "keywords": [
+    "AES",
+    "Crypt",
+    "aescrypt",
+    "encryption",
+    "encrypt",
+    "decrytion",
+    "decrypt"
+  ],
+  "author": "Judah Anthony",
+  "license": "MIT"
+}
