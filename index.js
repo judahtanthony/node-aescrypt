@@ -2,6 +2,8 @@ const fs = require('fs');
 const stream = require('stream');
 const crypto = require('crypto');
 
+const pkg = require('./package.json');
+
 function getKey(iv, password) {
   // This is a clever trick to do all the hashing rounds into a single buffer.
   // Note, sha255 is always 32 bytes and unicode is 2 bytes for each character.
@@ -71,7 +73,7 @@ class Encrypt extends stream.Transform {
   }
   _getCredentials(password) {
     const extensions = {
-      "CREATED_BY": "node-aescrypt 1.0",
+      "CREATED_BY": pkg.name + ' ' + pkg.version,
     };
     const capacity = 3 // file header
       + 1 // version
