@@ -34,7 +34,7 @@ class Encrypt extends stream.Transform {
   _init() {
     if (!this.cipher) {
       const credentials = this._getCredentials(this.password);
-      
+
       delete this.password; // Don't need this anymore.
 
       this.push(credentials.block);
@@ -51,6 +51,7 @@ class Encrypt extends stream.Transform {
     this._init();
 
     this.contentLength += chunk.length;
+
     const encChunk = this.cipher.update(chunk);
     this.push(encChunk);
     this.hmac.update(encChunk);
@@ -58,9 +59,11 @@ class Encrypt extends stream.Transform {
     callback();
   }
   _flush(callback) {
+    this._init();
+
     const lenMod16 = this.contentLength % 16;
     const padding = 16 - lenMod16;
-    
+
     const encChunk = this.cipher.update(Buffer.alloc(padding, padding));
     this.push(encChunk);
     this.hmac.update(encChunk);
@@ -216,7 +219,7 @@ class Decrypt extends stream.Transform {
       case Decrypt.MODE_DECRYPT:
         // We need to reserve 33 bytes of the end for the file-size-modulo-16 and HMAC.
         if (this.buffer.length > 33) {
-          
+
         }
     }
     callback(error);
@@ -259,20 +262,6 @@ class CLI {
       this.error('Error: -e or -d not specified');
     }
 
-    if (this.options.decrypt) {
-      // If we are processing stdin/stdout only do one stream.
-      if (this.options.input[0] === '-') {
-        this.options.input = this.options.input[0];
-      }
-      else {
-        this.options.input.forEach(infile => {
-          if (infile.substr(-4) !== '.aes') {
-            this.error('Error: your input file doesn\'t end in .aes');
-          }
-        });
-      }
-    }
-
     if (!this.options.password) {
       this.options.password = process.env.AESCRYPT_PASSWORD;
       // We should really fall back to somekind of command prompt if it is not
@@ -281,25 +270,45 @@ class CLI {
         this.error('Error: please provide a password');
       }
     }
+
+    if (!this.options.input || this.options.input.length == 0) {
+      this.error('Error: No file argument specified');
+    }
+    if (this.options.input.length > 1) {
+      if (this.options.output) {
+        this.error('Error: A single output file may not be specified with multiple input files.');
+      }
+      if (this.options.input.indexOf('-') !== -1) {
+        this.error('Error: STDIN may not be specified with multiple input files.');
+      }
+    }
+    if (this.options.decrypt && this.options.input[0] != '-' && this.options.input.find(infile => infile.substr(-4) !== '.aes')) {
+      this.error('Error: your input file doesn\'t end in .aes');
+    }
   }
   execute () {
-    const { encrypt, decrypt, input, password } = this.options;
-    if (input == '-') {
-      const from = process.stdin;
-      const to = process.stdout;
+    const { encrypt, decrypt, input, output, password } = this.options;
+    // This would be a great use of async.
+    Promise.all(input.map(infile => new Promise((resolve, reject) => {
+      const from = this._getFromStream(infile);
+      const to = this._getToStream(infile, output, decrypt);
       const through = decrypt ? new Decrypt(password) : new Encrypt(password);
-      from.pipe(through).pipe(to);
+      from.pipe(through).pipe(to).on('error', reject).on('finish', resolve);
+    })))
+    .catch(e => this.error(e.name + ': ' + e.message));
+  }
+  _getFromStream (input) {
+    return input == '-' ? process.stdin : fs.createReadStream(input, { encoding: 'binary' });
+  }
+  _getToStream (input, output, decrypt) {
+    if (output == '-' || (input == '-' && !output)) {
+      return process.stdout;
     }
-    else {
-      // This would be a great use of async.
-      input.forEach(infile => {
-        const outfile = decrypt ? infile.substr(0, infile.length - 4) : infile + '.aes';
-        const from = fs.createReadStream(infile, { encoding: 'binary' });
-        const to = fs.createWriteStream(outfile, { encoding: 'binary' });
-        const through = decrypt ? new Decrypt(password) : new Encrypt(password);
-        from.pipe(through).pipe(to);
-      });
+    let outfile = output;
+    if (!outfile) {
+      outfile = decrypt ? input.substr(0, input.length - 4) : input + '.aes';
     }
+    return fs.createWriteStream(outfile, { encoding: 'binary' });
   }
   error (message, code=1) {
     console.error(message);
