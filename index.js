@@ -21,6 +21,9 @@ function getKey(iv, password) {
   }
   return buffer.slice(0, 32);
 };
+function getHMAC(key) {
+  return crypto.createHmac('sha256', key);
+}
 
 class Encrypt extends stream.Transform {
   constructor(password, options) {
@@ -40,8 +43,7 @@ class Encrypt extends stream.Transform {
       this.push(credentials.block);
 
       this.cipher = this._getCipher(credentials.key, credentials.iv);
-
-      this.hmac = this._getHMAC(credentials.key);
+      this.hmac = getHMAC(credentials.key);
 
       return true;
     }
@@ -51,7 +53,6 @@ class Encrypt extends stream.Transform {
     this._init();
 
     this.contentLength += chunk.length;
-
     const encChunk = this.cipher.update(chunk);
     this.push(encChunk);
     this.hmac.update(encChunk);
@@ -114,9 +115,9 @@ class Encrypt extends stream.Transform {
       credCipher.update(encKey),
       credCipher.final(), // This one should be unnecessary, as we are disabling the padding, but just in case.
     ]);
-    const credHMAC = this._getHMAC(credKey)
-                          .update(credBlock)
-                          .digest();
+    const credHMAC = getHMAC(credKey)
+                     .update(credBlock)
+                     .digest();
     len += credIV.copy(buff, len);
     len += credBlock.copy(buff, len);
     len += credHMAC.copy(buff, len);
@@ -131,9 +132,6 @@ class Encrypt extends stream.Transform {
     const encCipher = crypto.createCipheriv('aes-256-cbc', key, iv);
     encCipher.setAutoPadding(false);
     return encCipher;
-  }
-  _getHMAC(key) {
-    return crypto.createHmac('sha256', key);
   }
 }
 
@@ -171,32 +169,34 @@ class Decrypt extends stream.Transform {
           this.mode = Decrypt.MODE_EXTESIONS;
         }
       case Decrypt.MODE_EXTESIONS:
-        while (this.buffer.readUInt16BE(0)) {
-          const extLen = this.buffer.readUInt16BE(0) + 2;
-          if (this.buffer.length >= extLen) {
-            ; // Just ignore the extension.
-            this.buffer = this.buffer.slice(extLen);
+        let i = 0;
+        // Search through the buffer to the length.
+        while ((i + 1) < this.buffer.length) {
+          const extLen = this.buffer.readUInt16BE(i);
+          i += 2
+          // If this extension has a length, fast-forward past it.
+          if (extLen > 0) {
+            i += extLen;
           }
+          // If this is a zero length extension, we are done.
           else {
+            this.buffer = this.buffer.slice(i);
+            this.mode = Decrypt.MODE_CREDENTIALS;
             break;
           }
-        }
-        if (this.buffer.readUInt16BE(0) == 0) {
-          this.buffer = this.slice(2);
-          this.mode = Decrypt.MODE_CREDENTIALS;
         }
       case Decrypt.MODE_CREDENTIALS:
         if (this.buffer.length >= 96) {
           const credIV = this.buffer.slice(0, 16);
           const credKey = getKey(credIV, this.password);
-          const credDecipher = crypto.createDecipheriv('aes-256-cbc', credKey, credIV);
+          const credDecipher = this._getDecipher(credKey, credIV);
           credDecipher.setAutoPadding(false);
           const credBlock = this.buffer.slice(16, 64);
-          const credHMACActual = this.buffer.slice(32, 96);
-          const credHMACExpected = crypto.createHmac('sha256', credKey)
-                                       .update(credBlock)
-                                       .digest();
-          if (credHMACActual != credHMACExpected) {
+          const credHMACActual = this.buffer.slice(64, 96);
+          const credHMACExpected = getHMAC(credKey)
+                                   .update(credBlock)
+                                   .digest();
+          if (credHMACExpected.compare(credHMACActual) !== 0) {
             error = new Error('Error: Message has been altered or password is incorrect');
             break;
           }
@@ -208,9 +208,7 @@ class Decrypt extends stream.Transform {
           const encIV = decryptedCredBlock.slice(0, 16);
           const encKey = decryptedCredBlock.slice(16, 48);
 
-          this.decipher = crypto.createDecipheriv('aes-256-cbc', encKey, encIV);
-          this.decipher.setAutoPadding(false);
-
+          this.decipher = this._getDecipher(encKey, encIV);
           this.hmac = crypto.createHmac('sha256', encKey);
 
           this.buffer = this.buffer.slice(96);
@@ -226,6 +224,11 @@ class Decrypt extends stream.Transform {
   }
   _flush(callback) {
     callback();
+  }
+  _getDecipher(key, iv) {
+    const encDecipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+    encDecipher.setAutoPadding(false);
+    return encDecipher;
   }
 }
 
@@ -298,7 +301,7 @@ class CLI {
     .catch(e => this.error(e.name + ': ' + e.message));
   }
   _getFromStream (input) {
-    return input == '-' ? process.stdin : fs.createReadStream(input, { encoding: 'binary' });
+    return input == '-' ? process.stdin : fs.createReadStream(input);
   }
   _getToStream (input, output, decrypt) {
     if (output == '-' || (input == '-' && !output)) {
@@ -308,7 +311,7 @@ class CLI {
     if (!outfile) {
       outfile = decrypt ? input.substr(0, input.length - 4) : input + '.aes';
     }
-    return fs.createWriteStream(outfile, { encoding: 'binary' });
+    return fs.createWriteStream(outfile);
   }
   error (message, code=1) {
     console.error(message);
