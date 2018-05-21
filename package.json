@@ -2,16 +2,36 @@
   "name": "node-aescrypt",
   "version": "1.0.0",
   "description": "A node implementation of the AES Crypt <https://www.aescrypt.com/> file encryption format.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "directories": {
-    "test": "test"
+    "src": "src",
+    "dist": "dist",
+    "bin": "bin"
   },
-  "dependencies": {
-    "command-line-args": "^5.0.2"
+  "dependencies": {},
+  "devDependencies": {
+    "@types/mocha": "^5.2.0",
+    "@types/node": "^10.1.2",
+    "command-line-args": "^5.0.2",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-promise": "^3.7.0",
+    "mocha": "^5.2.0",
+    "source-map-loader": "^0.2.3",
+    "ts-loader": "^4.3.0",
+    "typescript": "^2.8.3",
+    "typescript-eslint-parser": "^15.0.0",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"No tests yet.\";"
+    "build": "webpack",
+    "dev": "tsc --watch & nodemon dist",
+    "test": "webpack && mocha dist/**/*.spec.js",
+    "lint": "eslint src --ext ts",
+    "webpack": "webpack",
+    "aescrypt": "aescrypt"
   },
   "keywords": [
     "AES",
