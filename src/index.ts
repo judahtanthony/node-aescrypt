@@ -235,15 +235,41 @@ export class Decrypt extends Transform {
           this.mode = Decrypt.MODE_DECRYPT;
         }
       case Decrypt.MODE_DECRYPT:
-        // We need to reserve 33 bytes of the end for the file-size-modulo-16 and HMAC.
-        if (this.buffer.length > 33) {
-
+        // We need to reserve 33 bytes (+ 16 for the padding) of the end for the file-size-modulo-16 and HMAC.
+        if (this.buffer.length > 49) {
+          const encChunk = this.buffer.slice(0, -49);
+          this.hmac.update(encChunk);
+          this.push(this.decipher.update(encChunk));
+          this.buffer = this.buffer.slice(-49);
         }
     }
     callback(error);
   }
   _flush(callback:TransformCallback):void {
-    callback();
+    let error = null;
+
+    const encChunk = this.buffer.slice(0, 16);
+    const lenMod16 = this.buffer.readUInt8(16);
+    const encHMACActual = this.buffer.slice(17);
+
+    this.hmac.update(encChunk);
+    const encHMACExpected = this.hmac.digest();
+
+    if (encHMACExpected.compare(encHMACActual) !== 0) {
+      error = new Error('Error: Message has been altered or password is incorrect');
+    }
+    else if (lenMod16 > 16) {
+      error = new Error('Error: Message has been altered or password is incorrect');
+    }
+    else {
+      const decChunk = Buffer.concat([
+        this.decipher.update(encChunk),
+        this.decipher.final(),
+      ]).slice(0, lenMod16);
+      this.push(decChunk);
+    }
+
+    callback(error);
   }
   _getDecipher(key:Buffer, iv:Buffer):Decipher {
     const encDecipher = createDecipheriv('aes-256-cbc', key, iv);
