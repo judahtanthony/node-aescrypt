@@ -37,11 +37,24 @@ const getRandomReadable = left => {
       }
       this.push(buff);
       left -= len;
-      console.log('Sending ('+len+'/'+left+')');
+      // If we are done, Send the close signal.
       if (left <= 0) {
         this.push(null);
       }
     }
+  });
+};
+const getLengthWritable = cb => {
+  let decryptedLength = 0;
+  return new Writable({
+    write: function(chunk, encoding, callback) {
+      decryptedLength += chunk.length;
+      callback();
+    },
+    final: function(callback) {
+      cb(decryptedLength);
+      callback();
+    },
   });
 };
 
@@ -88,23 +101,15 @@ describe('Encrypt-Decrypt', function() {
      .on('error', done);
   });
 
-  it.skip('should be able to encrypt/decrypt large random files', function(done) {
-    this.timeout(10000);
-    let contentLength = 1000000;
-    let encryptedLength = 0;
-    let s = getRandomReadable(contentLength);
-    let w = new Writable({
-      write: function(chunk, encoding, callback) {
-        console.log('Receiving (' + chunk.length + ')');
-        encryptedLength += chunk.length;
-      },
-      final: function(callback) {
-        // I don't want to store everything, so let's just
-        // make sure the encryptedLength is greater than
-        // the contentLength.
-        assert.equal(contentLength < encryptedLength, true);
-        done();
-      },
+  it('should be able to encrypt/decrypt large random files', function(done) {
+    let expectedLength = 1000000;
+    let s = getRandomReadable(expectedLength);
+    let w = getLengthWritable(actualLength => {
+      // I don't want to store everything, so let's just
+      // make sure the final length is consistent with the
+      // original length.
+      assert.equal(expectedLength == actualLength, true);
+      done();
     });
     s.pipe(new Encrypt(KNOWN_TEST_PASSWORD))
      .pipe(new Decrypt(KNOWN_TEST_PASSWORD))
