@@ -11,6 +11,9 @@ describe('Encrypt', () => {
         this.push(null);
       }
     });
+    // This should be done better, with some kind of
+    // accumulator that only runs after the stream is
+    // closed.
     let w = new Writable({
       write: function(chunk, encoding, callback) {
         assert.equal(chunk.slice(0, 3).toString(), 'AES');

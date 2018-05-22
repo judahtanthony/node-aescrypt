@@ -5,6 +5,7 @@ module.exports = {
     target: "node",
     entry: {
       "index": "./src/index.ts",
+      "index.spec": "./src/index.spec.ts",
       "cli": "./src/cli.ts",
     },
     output: {

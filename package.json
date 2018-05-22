@@ -1,16 +1,36 @@
 {
   "name": "node-aescrypt",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A node implementation of the AES Crypt <https://www.aescrypt.com/> file encryption format.",
+  "author": "Judah Anthony",
+  "repository": "github:judahtanthony/node-aescrypt",
   "main": "dist/index.js",
   "bin": {
-    "aescrypt": "dist/cli.js",
+    "aescrypt": "bin/aescrypt"
   },
   "directories": {
     "src": "src",
     "dist": "dist",
     "bin": "bin"
   },
+  "scripts": {
+    "build": "webpack",
+    "prebuild-cli": "npm run build",
+    "build-cli": "echo '#!/usr/bin/env node' > bin/aescrypt && cat dist/cli.js >> bin/aescrypt && chmod +x bin/aescrypt",
+    "pretest": "npm run build",
+    "test": "mocha dist/**/*.spec.js",
+    "lint": "eslint src --ext ts",
+    "aescrypt": "aescrypt"
+  },
+  "keywords": [
+    "AES",
+    "Crypt",
+    "aescrypt",
+    "encryption",
+    "encrypt",
+    "decrytion",
+    "decrypt"
+  ],
   "dependencies": {},
   "devDependencies": {
     "@types/mocha": "^5.2.0",
@@ -28,23 +48,5 @@
     "webpack": "^4.8.3",
     "webpack-cli": "^2.1.3"
   },
-  "scripts": {
-    "build": "webpack",
-    "test": "webpack && mocha dist/**/*.spec.js",
-    "lint": "eslint src --ext ts",
-    "webpack": "webpack",
-    "aescrypt": "aescrypt"
-  },
-  "keywords": [
-    "AES",
-    "Crypt",
-    "aescrypt",
-    "encryption",
-    "encrypt",
-    "decrytion",
-    "decrypt"
-  ],
-  "author": "Judah Anthony",
-  "repository": "github:judahtanthony/node-aescrypt",
   "license": "MIT"
 }
