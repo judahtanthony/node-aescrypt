@@ -2,9 +2,13 @@ const path = require('path');
 
 module.exports = {
     mode: process.env.NODE_ENV || 'development',
-    entry: "./src/index.ts",
+    target: "node",
+    entry: {
+      "index": "./src/index.ts",
+      "cli": "./src/cli.ts",
+    },
     output: {
-        filename: "index.js",
+        filename: "[name].js",
         path: path.resolve(__dirname, 'dist')
     },
     // Enable sourcemaps for debugging webpack's output.

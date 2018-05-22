@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A node implementation of the AES Crypt <https://www.aescrypt.com/> file encryption format.",
   "main": "dist/index.js",
+  "bin": {
+    "aescrypt": "dist/cli.js",
+  },
   "directories": {
     "src": "src",
     "dist": "dist",
@@ -27,7 +30,6 @@
   },
   "scripts": {
     "build": "webpack",
-    "dev": "tsc --watch & nodemon dist",
     "test": "webpack && mocha dist/**/*.spec.js",
     "lint": "eslint src --ext ts",
     "webpack": "webpack",
