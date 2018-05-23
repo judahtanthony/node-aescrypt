@@ -1,32 +1,9 @@
 import * as assert from "assert";
 import { Readable, Writable } from "stream";
+import { toStream, withStream } from "./lib";
+import { Encrypt } from './encrypt';
+import { Decrypt } from './decrypt';
 
-import { Encrypt, Decrypt } from "./index";
-
-const getReadable = contents => {
-  return new Readable({
-    read: function(size) {
-      this.push(contents);
-      this.push(null);
-    }
-  });
-};
-const getWritable = cb => {
-  let buffer = Buffer.alloc(0);
-  return new Writable({
-    write: function(chunk, encoding, callback) {
-      buffer =  Buffer.concat([
-        buffer,
-        chunk,
-      ]);
-      callback();
-    },
-    final: function(callback) {
-      cb(buffer);
-      callback();
-    }
-  });
-};
 const getRandomReadable = left => {
   return new Readable({
     read: function(size) {
@@ -64,8 +41,8 @@ const KNOWN_CONTENTS = 'test\n';
 
 describe('Encrypt', function() {
   it('should create an AES encrypted file', function(done) {
-    let s = getReadable(KNOWN_CONTENTS);
-    let w = getWritable(contents => {
+    let s = toStream(KNOWN_CONTENTS);
+    let w = withStream(contents => {
       assert.equal(contents.slice(0, 3).toString(), 'AES');
       done();
     });
@@ -77,8 +54,8 @@ describe('Encrypt', function() {
 
 describe('Decrypt', function() {
   it('should be able to decrypt an AES encrypted file', function(done) {
-    let s = getReadable(Buffer.from(KNOWN_TEST_FILE, 'base64'));
-    let w = getWritable(contents => {
+    let s = toStream(Buffer.from(KNOWN_TEST_FILE, 'base64'));
+    let w = withStream(contents => {
       assert.equal(contents.toString(), KNOWN_CONTENTS);
       done();
     });
@@ -90,8 +67,8 @@ describe('Decrypt', function() {
 
 describe('Encrypt-Decrypt', function() {
   it('should get the same contents after decrypting then before encrypting', function(done) {
-    let s = getReadable(KNOWN_CONTENTS);
-    let w = getWritable(contents => {
+    let s = toStream(KNOWN_CONTENTS);
+    let w = withStream(contents => {
       assert.equal(contents.toString(), KNOWN_CONTENTS);
       done();
     });
