@@ -1,13 +1,13 @@
-import { Encrypt } from './encrypt';
-import { Decrypt } from './decrypt';
-import { toStream, withStream } from "./lib";
+import { Decrypt } from './lib/decrypt';
+import { Encrypt } from './lib/encrypt';
+import { toStream, withStream } from './lib/util';
 
-export { Encrypt } from './encrypt';
-export { Decrypt } from './decrypt';
-export { toStream, withStream } from "./lib";
+export { Encrypt } from './lib/encrypt';
+export { Decrypt } from './lib/decrypt';
+export { toStream, withStream } from './lib/util';
 export default {
-  Encrypt,
   Decrypt,
+  Encrypt,
   toStream,
   withStream,
 };
