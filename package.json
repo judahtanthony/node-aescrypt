@@ -2,7 +2,7 @@
   "name": "node-aescrypt",
   "version": "0.1.0",
   "description": "A node implementation of the AES Crypt <https://www.aescrypt.com/> file encryption format.",
-  "author": "Judah Anthony",
+  "author": "Judah Anthony <judahtanthony@gmail.com> (@judahtanthony)",
   "bin": {
     "aescrypt": "./bin/aescrypt"
   },
