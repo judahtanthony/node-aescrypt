@@ -1,0 +1,601 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>node-aescrypt</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">node-aescrypt</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> node-aescrypt</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-is-not-exported"><a href="classes/cli.html" class="tsd-kind-icon">CLI</a></li>
+								<li class="tsd-kind-class"><a href="classes/decrypt.html" class="tsd-kind-icon">Decrypt</a></li>
+								<li class="tsd-kind-class"><a href="classes/encrypt.html" class="tsd-kind-icon">Encrypt</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-not-exported">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-is-not-exported"><a href="interfaces/encryptioncredentials.html" class="tsd-kind-icon">Encryption<wbr>Credentials</a></li>
+								<li class="tsd-kind-interface tsd-is-not-exported"><a href="interfaces/options.html" class="tsd-kind-icon">Options</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias"><a href="globals.html#transformcallback" class="tsd-kind-icon">Transform<wbr>Callback</a></li>
+								<li class="tsd-kind-type-alias"><a href="globals.html#withstreamcallback" class="tsd-kind-icon">With<wbr>Stream<wbr>Callback</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable"><a href="globals.html#aescrypt_file_format_version" class="tsd-kind-icon">AESCRYPT_<wbr>FILE_<wbr>FORMAT_<wbr>VERSION</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#cli_help_text" class="tsd-kind-icon">CLI_<wbr>HELP_<wbr>TEXT</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#known_contents" class="tsd-kind-icon">KNOWN_<wbr>CONTENTS</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#known_test_file" class="tsd-kind-icon">KNOWN_<wbr>TEST_<wbr>FILE</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#known_test_password" class="tsd-kind-icon">KNOWN_<wbr>TEST_<wbr>PASSWORD</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#name" class="tsd-kind-icon">NAME</a></li>
+								<li class="tsd-kind-variable"><a href="globals.html#version" class="tsd-kind-icon">VERSION</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#app" class="tsd-kind-icon">app</a></li>
+								<li class="tsd-kind-variable tsd-is-not-exported"><a href="globals.html#pkg" class="tsd-kind-icon">pkg</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function"><a href="globals.html#gethmac" class="tsd-kind-icon">getHMAC</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#getkey" class="tsd-kind-icon">get<wbr>Key</a></li>
+								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#getlengthwritable" class="tsd-kind-icon">get<wbr>Length<wbr>Writable</a></li>
+								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#getrandomreadable" class="tsd-kind-icon">get<wbr>Random<wbr>Readable</a></li>
+								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#readpackagejson" class="tsd-kind-icon">read<wbr>Package<wbr>Json</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#tostream" class="tsd-kind-icon">to<wbr>Stream</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#withstream" class="tsd-kind-icon">with<wbr>Stream</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="transformcallback" class="tsd-anchor"></a>
+					<h3>Transform<wbr>Callback</h3>
+					<div class="tsd-signature tsd-kind-icon">Transform<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L14">lib/util.ts:14</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Error</span>, data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> error: <span class="tsd-signature-type">Error</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> data: <span class="tsd-signature-type">Buffer</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="withstreamcallback" class="tsd-anchor"></a>
+					<h3>With<wbr>Stream<wbr>Callback</h3>
+					<div class="tsd-signature tsd-kind-icon">With<wbr>Stream<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L56">lib/util.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/index.spec.ts#L25">index.spec.ts:25</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>decryptedLength<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>decryptedLength: <span class="tsd-signature-type">number</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="aescrypt_file_format_version" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> AESCRYPT_<wbr>FILE_<wbr>FORMAT_<wbr>VERSION</h3>
+					<div class="tsd-signature tsd-kind-icon">AESCRYPT_<wbr>FILE_<wbr>FORMAT_<wbr>VERSION<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> =&nbsp;2</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L12">lib/util.ts:12</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="cli_help_text" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> CLI_<wbr>HELP_<wbr>TEXT</h3>
+					<div class="tsd-signature tsd-kind-icon">CLI_<wbr>HELP_<wbr>TEXT<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"Usage$ npx aescrypt {-e|-d} [-p &lt;password&gt;] { [-o &lt;output filename&gt;] &lt;file&gt; | &lt;file&gt; [&lt;file&gt; ...] }ArguementsProvide one or more files to be encrypted or decrypted.  If you are decrypting a file, it should have a .aes extension.Options--encrypt, -e       Encrypt the input file--decrypt, -d       Decrypt the input file--password, -p      Use the provided password--output, -o        Specify the output filename--version           Get version information--help              Outputs this help textExamples$ npx aescrypt -e -p foo bar.txt$ npx aescrypt -d -o baz.txt bar.txt.aes$ cat baz.txt | npx aescrypt -e -p test &gt; encrypted.aes"</span><span class="tsd-signature-symbol"> =&nbsp;&#x60;Usage$ npx aescrypt {-e|-d} [-p &lt;password&gt;] { [-o &lt;output filename&gt;] &lt;file&gt; | &lt;file&gt; [&lt;file&gt; ...] }ArguementsProvide one or more files to be encrypted or decrypted.  If you are decrypting a file, it should have a .aes extension.Options--encrypt, -e       Encrypt the input file--decrypt, -d       Decrypt the input file--password, -p      Use the provided password--output, -o        Specify the output filename--version           Get version information--help              Outputs this help textExamples$ npx aescrypt -e -p foo bar.txt$ npx aescrypt -d -o baz.txt bar.txt.aes$ cat baz.txt | npx aescrypt -e -p test &gt; encrypted.aes&#x60;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/cli/cli.ts#L10">cli/cli.ts:10</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="known_contents" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> KNOWN_<wbr>CONTENTS</h3>
+					<div class="tsd-signature tsd-kind-icon">KNOWN_<wbr>CONTENTS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"test"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;test&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/index.spec.ts#L43">index.spec.ts:43</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="known_test_file" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> KNOWN_<wbr>TEST_<wbr>FILE</h3>
+					<div class="tsd-signature tsd-kind-icon">KNOWN_<wbr>TEST_<wbr>FILE<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"QUVTAgAAGENSRUFURURfQlkAYWVzY3J5cHQgMy4wNQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIz7OO6zNM6K3hu7TWh/aXzkxPhn/cyCvp+dzNsZilUAxaUWnX4R8CfM0rYXPBOXQ+S0rUf4kAp0us9MEPlNOWSZDgY3tP2/Y2oAm9rOcaWUyWySwDM01UxaDWcLOrp+w0YcH4isUGd2KVIHmmHl68FKwcyY2kikIL+dolT07q6Lo+wL8hVDAmxWNm2Oj23eAk&#x3D;"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;QUVTAgAAGENSRUFURURfQlkAYWVzY3J5cHQgMy4wNQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEIz7OO6zNM6K3hu7TWh/aXzkxPhn/cyCvp+dzNsZilUAxaUWnX4R8CfM0rYXPBOXQ+S0rUf4kAp0us9MEPlNOWSZDgY3tP2/Y2oAm9rOcaWUyWySwDM01UxaDWcLOrp+w0YcH4isUGd2KVIHmmHl68FKwcyY2kikIL+dolT07q6Lo+wL8hVDAmxWNm2Oj23eAk&#x3D;&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/index.spec.ts#L40">index.spec.ts:40</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="known_test_password" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> KNOWN_<wbr>TEST_<wbr>PASSWORD</h3>
+					<div class="tsd-signature tsd-kind-icon">KNOWN_<wbr>TEST_<wbr>PASSWORD<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"test"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;test&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/index.spec.ts#L42">index.spec.ts:42</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="name" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> NAME</h3>
+					<div class="tsd-signature tsd-kind-icon">NAME<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;pkg.name</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L10">lib/util.ts:10</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="version" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> VERSION</h3>
+					<div class="tsd-signature tsd-kind-icon">VERSION<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;pkg.version</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L11">lib/util.ts:11</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="app" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> app</h3>
+					<div class="tsd-signature tsd-kind-icon">app<span class="tsd-signature-symbol">:</span> <a href="classes/cli.html" class="tsd-signature-type">CLI</a><span class="tsd-signature-symbol"> =&nbsp;new CLI()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/cli/cli.ts#L255">cli/cli.ts:255</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-is-not-exported">
+					<a name="pkg" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> pkg</h3>
+					<div class="tsd-signature tsd-kind-icon">pkg<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol"> =&nbsp;readPackageJson(__dirname + &#x27;/../../../package.json&#x27;)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L8">lib/util.ts:8</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="gethmac" class="tsd-anchor"></a>
+					<h3>getHMAC</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">getHMAC<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Hmac</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L37">lib/util.ts:37</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>key: <span class="tsd-signature-type">Buffer</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Hmac</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="getkey" class="tsd-anchor"></a>
+					<h3>get<wbr>Key</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Key<span class="tsd-signature-symbol">(</span>iv<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span>, password<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L16">lib/util.ts:16</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>iv: <span class="tsd-signature-type">Buffer</span></h5>
+								</li>
+								<li>
+									<h5>password: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Buffer</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+					<a name="getlengthwritable" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Length<wbr>Writable</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Length<wbr>Writable<span class="tsd-signature-symbol">(</span>cb<span class="tsd-signature-symbol">: </span><a href="globals.html#withstreamcallback" class="tsd-signature-type">WithStreamCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writable</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/index.spec.ts#L26">index.spec.ts:26</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>cb: <a href="globals.html#withstreamcallback" class="tsd-signature-type">WithStreamCallback</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writable</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+					<a name="getrandomreadable" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Random<wbr>Readable</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Random<wbr>Readable<span class="tsd-signature-symbol">(</span>length<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readable</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/index.spec.ts#L7">index.spec.ts:7</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>length: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readable</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+					<a name="readpackagejson" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> read<wbr>Package<wbr>Json</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">read<wbr>Package<wbr>Json<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L5">lib/util.ts:5</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>path: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="tostream" class="tsd-anchor"></a>
+					<h3>to<wbr>Stream</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Stream<span class="tsd-signature-symbol">(</span>contents<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Readable</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L41">lib/util.ts:41</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>contents: <span class="tsd-signature-type">Buffer</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Readable</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="withstream" class="tsd-anchor"></a>
+					<h3>with<wbr>Stream</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">with<wbr>Stream<span class="tsd-signature-symbol">(</span>cb<span class="tsd-signature-symbol">: </span><a href="globals.html#withstreamcallback" class="tsd-signature-type">WithStreamCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Writable</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/judahtanthony/node-aescrypt/blob/2b15e58/src/lib/util.ts#L57">lib/util.ts:57</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>cb: <a href="globals.html#withstreamcallback" class="tsd-signature-type">WithStreamCallback</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Writable</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals current ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/cli.html" class="tsd-kind-icon">CLI</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/decrypt.html" class="tsd-kind-icon">Decrypt</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/encrypt.html" class="tsd-kind-icon">Encrypt</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/encryptioncredentials.html" class="tsd-kind-icon">Encryption<wbr>Credentials</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/options.html" class="tsd-kind-icon">Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#transformcallback" class="tsd-kind-icon">Transform<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#withstreamcallback" class="tsd-kind-icon">With<wbr>Stream<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#aescrypt_file_format_version" class="tsd-kind-icon">AESCRYPT_<wbr>FILE_<wbr>FORMAT_<wbr>VERSION</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#cli_help_text" class="tsd-kind-icon">CLI_<wbr>HELP_<wbr>TEXT</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#known_contents" class="tsd-kind-icon">KNOWN_<wbr>CONTENTS</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#known_test_file" class="tsd-kind-icon">KNOWN_<wbr>TEST_<wbr>FILE</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#known_test_password" class="tsd-kind-icon">KNOWN_<wbr>TEST_<wbr>PASSWORD</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#name" class="tsd-kind-icon">NAME</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#version" class="tsd-kind-icon">VERSION</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#app" class="tsd-kind-icon">app</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#pkg" class="tsd-kind-icon">pkg</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#gethmac" class="tsd-kind-icon">getHMAC</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getkey" class="tsd-kind-icon">get<wbr>Key</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#getlengthwritable" class="tsd-kind-icon">get<wbr>Length<wbr>Writable</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#getrandomreadable" class="tsd-kind-icon">get<wbr>Random<wbr>Readable</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#readpackagejson" class="tsd-kind-icon">read<wbr>Package<wbr>Json</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#tostream" class="tsd-kind-icon">to<wbr>Stream</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#withstream" class="tsd-kind-icon">with<wbr>Stream</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
