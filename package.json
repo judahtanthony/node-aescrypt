@@ -9,7 +9,7 @@
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/janthonyeconomist/node-aescrypt",
+  "repository": "https://github.com/judahtanthony/node-aescrypt",
   "license": "MIT",
   "keywords": [
     "AES",
