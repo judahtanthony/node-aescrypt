@@ -1,4 +1,4 @@
-import { test } from 'ava';
+import test from 'ava';
 import { Readable, Writable } from 'stream';
 import { Decrypt } from './lib/decrypt';
 import { Encrypt } from './lib/encrypt';
@@ -65,8 +65,7 @@ test.cb(
       t.is(contents.toString(), KNOWN_CONTENTS);
       t.end();
     });
-    s
-      .pipe(new Encrypt(KNOWN_TEST_PASSWORD))
+    s.pipe(new Encrypt(KNOWN_TEST_PASSWORD))
       .pipe(new Decrypt(KNOWN_TEST_PASSWORD))
       .pipe(w)
       .on('error', t.end);
@@ -85,8 +84,7 @@ test.cb(
       t.is(expectedLength, actualLength);
       t.end();
     });
-    s
-      .pipe(new Encrypt(KNOWN_TEST_PASSWORD))
+    s.pipe(new Encrypt(KNOWN_TEST_PASSWORD))
       .pipe(new Decrypt(KNOWN_TEST_PASSWORD))
       .pipe(w)
       .on('error', t.end);
