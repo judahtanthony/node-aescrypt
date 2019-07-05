@@ -41,7 +41,7 @@ The primary reason I built this package was actually to integrate it into build 
 
 To use the library version you should import the `Decrypt` or `Encrypt` classes from the module.  These classes implement the node `stream.Transform` interface, so that they can be piped through by any `Readable` and/or `Writable` stream.  So for example if you wanted to encrypt a file you could do this:
 
-```bash
+```js
 import { createReadStream, createWriteStream } from 'fs';
 import { Encrypt } from 'node-aescrypt';
 
