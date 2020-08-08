@@ -32,12 +32,12 @@
     "test:lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
     "test:unit": "nyc --silent ava",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
-    "cov": "run-s build test:unit cov:html && opn coverage/index.html",
+    "cov": "run-s build test:unit cov:html && open-cli coverage/index.html",
     "cov:html": "nyc report --reporter=html",
     "cov:send": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "cov:check": "nyc report && nyc check-coverage --lines 90",
     "cov:check-strict": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
-    "doc": "run-s doc:html && opn build/docs/index.html",
+    "doc": "run-s doc:html && open-cli build/docs/index.html",
     "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
     "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
     "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
@@ -64,33 +64,33 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "meow": "^5.0.0"
+    "meow": "^7.0.1"
   },
   "devDependencies": {
     "@types/meow": "^4.0.1",
-    "ava": "1.0.0-beta.7",
+    "ava": "3.11.1",
     "codecov": "^3.1.0",
     "cz-conventional-changelog": "^2.1.0",
     "gh-pages": "^2.0.1",
     "npm-run-all": "^4.1.5",
     "npm-scripts-info": "^0.3.9",
-    "nyc": "^13.1.0",
-    "opn-cli": "^4.0.0",
+    "nyc": "^15.1.0",
+    "opn-cli": "^5.0.0",
     "prettier": "^1.15.2",
-    "standard-version": "^8.0.1",
-    "trash-cli": "^1.4.0",
-    "tslint": "^5.11.0",
+    "standard-version": "^8.0.2",
+    "trash-cli": "^3.1.0",
+    "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.17.0",
-    "tslint-immutable": "^5.0.0",
-    "typedoc": "^0.14.2",
-    "typescript": "^3.1.6"
+    "tslint-immutable": "^6.0.1",
+    "typedoc": "^0.17.8",
+    "typescript": "^3.9.7"
   },
   "ava": {
     "failFast": true,
     "files": [
       "build/main/**/*.spec.js"
     ],
-    "sources": [
+    "ignoredByWatcher": [
       "build/main/**/*.js"
     ]
   },
