@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.7](https://github.com/judahtanthony/node-aescrypt/compare/v1.0.6...v1.0.7) (2020-08-08)
+
+
+### Bug Fixes
+
+* **package.json:** ava only supports node 10, 12, and 14 ([99aa834](https://github.com/judahtanthony/node-aescrypt/commit/99aa8346b37302c57e460da0be767683ebcc6d9b))
+
 ### [1.0.6](https://github.com/judahtanthony/node-aescrypt/compare/v1.0.5...v1.0.6) (2020-08-08)
 
 
