@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.6](https://github.com/judahtanthony/node-aescrypt/compare/v1.0.5...v1.0.6) (2020-08-08)
+
+
+### Bug Fixes
+
+* Don't need this in there ([4b04bba](https://github.com/judahtanthony/node-aescrypt/commit/4b04bba6050ec59b6541f4e901e8c2e8fe96d08c))
+
 ### [1.0.5](https://github.com/judahtanthony/node-aescrypt/compare/v1.0.3...v1.0.5) (2020-08-08)
 
 ### [1.0.4](https://github.com/judahtanthony/node-aescrypt/compare/v1.0.3...v1.0.4) (2020-08-08)
