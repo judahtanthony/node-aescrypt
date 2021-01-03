@@ -1,11 +1,7 @@
 import { createHash, createHmac, Hmac } from 'crypto';
-import { readFileSync } from 'fs';
 import { Readable, Writable } from 'stream';
 
-const readPackageJson = (path: string) =>
-  JSON.parse(readFileSync(path, 'utf8'));
-
-const pkg = readPackageJson(__dirname + '/../../../package.json');
+const pkg = require("../../../package.json");
 
 export const NAME = pkg.name;
 export const VERSION = pkg.version;
