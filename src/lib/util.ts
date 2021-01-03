@@ -1,11 +1,12 @@
 import { createHash, createHmac, Hmac } from 'crypto';
 import { readFileSync } from 'fs';
+import { resolve as pathResolve } from 'path';
 import { Readable, Writable } from 'stream';
 
 const readPackageJson = (path: string) =>
   JSON.parse(readFileSync(path, 'utf8'));
 
-const pkg = readPackageJson(__dirname + '/../../../package.json');
+const pkg = readPackageJson(pathResolve(__dirname, '../../../package.json'));
 
 export const NAME = pkg.name;
 export const VERSION = pkg.version;
