@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.8](https://github.com/judahtanthony/node-aescrypt/compare/v1.0.7...v1.0.8) (2021-01-03)
+
+
+### Bug Fixes
+
+* Windows comapatible path handling ([5f7cdbc](https://github.com/judahtanthony/node-aescrypt/commit/5f7cdbc7080d913ce7c9138b315cd31ad04743d1))
+
 ### [1.0.7](https://github.com/judahtanthony/node-aescrypt/compare/v1.0.6...v1.0.7) (2020-08-08)
 
 
