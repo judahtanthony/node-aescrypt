@@ -1,12 +1,11 @@
 import { createDecipheriv, Decipher, Hmac } from 'crypto';
-import { Transform } from 'stream';
+import { Transform, TransformOptions } from 'stream';
 import {
   AESCRYPT_FILE_FORMAT_VERSION,
   getHMAC,
   getKey,
-  toStream,
   TransformCallback,
-  withStream,
+  processBufferWithTransform,
 } from './util';
 
 /**
@@ -18,54 +17,69 @@ import {
  * decrypts it passing it on as a Readable stream.
  */
 export class Decrypt extends Transform {
+  /** @internal File header reading mode. */
   static get MODE_FILE_HEADER(): number {
     return 0;
   }
+  /** @internal Extensions reading mode. */
   static get MODE_EXTESIONS(): number {
     return 1;
   }
+  /** @internal Credentials (IV and key) reading mode. */
   static get MODE_CREDENTIALS(): number {
     return 2;
   }
+  /** @internal Main content decryption mode. */
   static get MODE_DECRYPT(): number {
     return 3;
   }
-  // Create a small helper static method if you just want to decrypt a whole
-  // Buffer all at once.
+
+  /**
+   * A static helper method to decrypt an entire buffer at once.
+   * @param password - The password to use for decryption.
+   * @param buffer - The encrypted buffer (in AES Crypt file format).
+   * @returns A Promise that resolves with the decrypted (plaintext) buffer.
+   */
   public static buffer(password: string, buffer: Buffer): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
-      toStream(buffer)
-        .pipe(new Decrypt(password))
-        .pipe(
-          withStream(contents => {
-            resolve(contents);
-          })
-        )
-        .on('error', reject);
-    });
+    const decryptInstance = new Decrypt(password);
+    return processBufferWithTransform(buffer, decryptInstance);
   }
 
-  private password: string;
-  private decipher: Decipher | null;
-  private hmac: Hmac | null;
-  private mode: number;
-  private buffer: Buffer;
+  private password?: string; // Stores the password temporarily
+  private decipher: Decipher | null; // AES decipher instance
+  private hmac: Hmac | null; // HMAC instance for integrity checking
+  private mode: number; // Current mode in the state machine for parsing file format
+  private buffer: Buffer; // Internal buffer to accumulate incoming chunks
 
-  constructor(password: string, options?: any) {
+  /**
+   * Creates an instance of the Decrypt stream.
+   * @param password - The password to use for decryption.
+   * @param options - Optional stream transform options.
+   */
+  constructor(password: string, options?: TransformOptions) {
     super(options);
     this.password = password;
     this.decipher = null;
     this.hmac = null;
-    this.mode = 0;
+    this.mode = Decrypt.MODE_FILE_HEADER; // Start in header reading mode
     this.buffer = Buffer.alloc(0);
   }
+
+  /**
+   * Internal _transform method for the Transform stream.
+   * Processes incoming chunks of encrypted data, parsing the AES Crypt
+   * file format, and eventually decrypting and pushing plaintext data.
+   * @param chunk - The chunk of encrypted data.
+   * @param _encoding - The encoding of the chunk (ignored).
+   * @param callback - Callback to signal completion of processing this chunk.
+   */
   public _transform(
     chunk: Buffer,
-    _: string,
+    _encoding: string, // Parameter name changed for clarity
     callback: TransformCallback
   ): void {
     this.buffer = Buffer.concat([this.buffer, chunk]);
-    let error = null;
+    let error: Error | null = null; // Ensure error is typed
     // Move through the various sections of the file format and raise an error
     // If anything is malformed.
     if (this.mode === Decrypt.MODE_FILE_HEADER) {
@@ -102,8 +116,15 @@ export class Decrypt extends Transform {
       callback();
     }
   }
+
+  /**
+   * Internal _flush method for the Transform stream.
+   * Called when all encrypted data has been written. It performs final
+   * HMAC verification and pushes any remaining decrypted data.
+   * @param callback - Callback to signal completion of the flushing process.
+   */
   public _flush(callback: TransformCallback): void {
-    let error = null;
+    let error: Error | null = null; // Ensure error is typed
 
     // If we never got to the decryption mode, something went terribly wrong.
     // Most likely, there is a problem in the extensions, and we never found
@@ -198,14 +219,15 @@ export class Decrypt extends Transform {
   private _modeCredentials(): Error | null {
     if (this.buffer.length >= 96) {
       const credIV = this.buffer.slice(0, 16);
+      if (this.password === undefined) {
+        return new Error('Password is not defined');
+      }
       const credKey = getKey(credIV, this.password);
       const credDecipher = this._getDecipher(credKey, credIV);
       credDecipher.setAutoPadding(false);
       const credBlock = this.buffer.slice(16, 64);
       const credHMACActual = this.buffer.slice(64, 96);
-      const credHMACExpected = getHMAC(credKey)
-        .update(credBlock)
-        .digest();
+      const credHMACExpected = getHMAC(credKey).update(credBlock).digest();
       // First we check the HMAC signature of the encrypted credentials block.
       // This ensures nothing was tampered with.  It also has the added benefit
       // of checking the password early on in the decryption process.

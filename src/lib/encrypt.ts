@@ -5,10 +5,9 @@ import {
   getHMAC,
   getKey,
   NAME,
-  toStream,
   TransformCallback,
   VERSION,
-  withStream,
+  processBufferWithTransform,
 } from './util';
 
 interface EncryptionCredentials {
@@ -30,19 +29,11 @@ export class Encrypt extends Transform {
   // Buffer all at once.
   // Note: There is a bit of duplication with the Decrypt version of this method.
   public static buffer(password: string, buffer: Buffer): Promise<Buffer> {
-    return new Promise((resolve, reject) => {
-      toStream(buffer)
-        .pipe(new Encrypt(password))
-        .pipe(
-          withStream(contents => {
-            resolve(contents);
-          })
-        )
-        .on('error', reject);
-    });
+    const encryptInstance = new Encrypt(password);
+    return processBufferWithTransform(buffer, encryptInstance);
   }
 
-  private password: string;
+  private password?: string;
   private cipher: Cipher | null;
   private hmac: Hmac | null;
   private contentLength: number;
@@ -111,6 +102,11 @@ export class Encrypt extends Transform {
     if (this.cipher == null) {
       this._pushFileHeader();
       this._pushExtensions();
+      if (this.password === undefined) {
+        // This should not happen, as the constructor requires a password.
+        // However, to satisfy TypeScript's strict null checks when password is deleted:
+        throw new Error('Password is not defined during init');
+      }
       const credentials = this._getCredentials(this.password);
       this._pushCredentials(credentials);
 
@@ -145,7 +141,7 @@ export class Encrypt extends Transform {
     // Allocate a single buffer for all the extensions.
     const buff = Buffer.alloc(capacity);
     let len = 0;
-    Object.keys(extensions).forEach(k => {
+    Object.keys(extensions).forEach((k) => {
       len = buff.writeUInt16BE(k.length + 1 + extensions[k].length, len);
       len += buff.write(k, len);
       len += 1; // Delimiter
@@ -176,9 +172,7 @@ export class Encrypt extends Transform {
       credCipher.final(), // This one should be unnecessary, as we are disabling the padding, but just in case.
     ]);
     // Sign them.
-    const credHMAC = getHMAC(credKey)
-      .update(credBlock)
-      .digest();
+    const credHMAC = getHMAC(credKey).update(credBlock).digest();
     // Than push them downstream.
     this.push(credIV);
     this.push(credBlock);
