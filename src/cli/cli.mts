@@ -171,81 +171,85 @@ Arguments:
     const { decrypt, input, output } = this.options;
     let { password } = this.options; // password can be undefined here
     let tmpFile = '';
-    if (!password) {
-      // If we need to get the password on the stdin, but we have a data stream`
-      // coming that way, we need to consume the data, so make room for the password.
-      if (input[0] === '-') {
-        tmpFile = await this._stashStdIn();
-        input[0] = tmpFile;
 
-        // I can't figure out how to get both the data and password on the stdin.
-        unlinkSync(tmpFile);
-        this.error(
-          'Error: You must provide the password if you are stream the data on STDIN.'
-        );
+    try {
+      if (!password) {
+        if (input[0] === '-') {
+          tmpFile = await this._stashStdIn();
+          input[0] = tmpFile;
+          // Note: original logic had an error here after stashing.
+          // This seems like a specific case that might need password before stashing,
+          // or the error message needs to be more general if stashing fails or if password prompt is impossible.
+          // For now, preserving the immediate error after stashing if stdin was data source.
+          unlinkSync(tmpFile); // Clean up immediately after stashing, before erroring
+          this.error(
+            'Error: You must provide the password if you are stream the data on STDIN.'
+          );
+          return; // Exit early
+        }
+        password = await this._getPasswordOnStdIn();
       }
-      password = await this._getPasswordOnStdIn();
-    }
-    // This would be a great use of async.
-    return Promise.all(
-      input.map(
-        (infile: string) =>
-          new Promise((resolve, reject) => {
-            const from = this._getFromStream(infile);
-            const to = this._getToStream(infile, output, decrypt);
-            // Password will be string by this point due to the !password check and _getPasswordOnStdIn()
-            const through = decrypt
-              ? new Decrypt(password as string) 
-              : new Encrypt(password as string);
 
-            // Centralized error handler for this specific input file's pipeline
-            const handleStreamError = (err: Error) => { // Use base Error, cast to CustomError for filename
-              const customErr = err as CustomError;
-              if (!customErr.filename) {
-                customErr.filename = infile === '-' ? 'stdin' : infile;
-              }
-              reject(customErr);
-            };
+      await Promise.all(
+        input.map(
+          (infile: string) =>
+            new Promise<void>((resolve, reject) => { // Changed to Promise<void>
+              const from = this._getFromStream(infile);
+              const to = this._getToStream(infile, output, decrypt);
+              const through = decrypt
+                ? new Decrypt(password as string)
+                : new Encrypt(password as string);
 
-            from.on('error', handleStreamError);
-            through.on('error', handleStreamError);
-            to.on('error', handleStreamError);
+              const handleStreamError = (err: Error) => {
+                const customErr = err as CustomError;
+                if (!customErr.filename) {
+                  customErr.filename = infile === '-' ? 'stdin' : infile;
+                }
+                reject(customErr);
+              };
 
-            from
-              .pipe(through)
-              .pipe(to)
-              .on('finish', resolve);
-          })
-      )
-    )
-      .then(() => {
-        if (tmpFile) {
-          unlinkSync(tmpFile);
-        }
-      })
-      .catch(err => { // Changed 'e' to 'err' for clarity
-        if (tmpFile) {
-          unlinkSync(tmpFile);
-        }
-        // Check if it's a NodeJS file system error
-        const customErr = err as CustomError; // Cast to CustomError to access potential filename
-        if (customErr.code && typeof customErr.code === 'string') {
-          const filename = customErr.filename || (customErr.path ? String(customErr.path).split('/').pop() : 'unknown file');
-          if (customErr.code === 'ENOENT') {
-            this.error(`Error: Input file not found: ${filename}`);
-            return;
-          }
-          if (customErr.code === 'EACCES') {
-            this.error(`Error: Permission denied for file: ${filename}`);
-            return;
-          }
-          // For other fs errors, include the code
-          this.error(`${customErr.name} (${customErr.code}) for file ${filename}: ${customErr.message.replace(`${customErr.code}: `, '')}`);
+              from.on('error', handleStreamError);
+              through.on('error', handleStreamError);
+              to.on('error', handleStreamError);
+
+              from
+                .pipe(through)
+                .pipe(to)
+                .on('finish', resolve)
+                // Errors are handled by individual stream error handlers attached above
+                // to provide more context. If an error is not caught by them,
+                // it might propagate higher or cause unhandled rejection.
+                // However, stream best practice is to handle 'error' on all participating streams.
+            })
+        )
+      );
+
+      if (tmpFile) {
+        // This part might be unreachable if the logic above always errors out after stashing.
+        // However, if _stashStdIn could complete and password prompt followed by other operations,
+        // then tmpFile cleanup here is relevant. Given the current immediate error, it's less so.
+        unlinkSync(tmpFile);
+      }
+    } catch (err) { // Catches errors from await _getPasswordOnStdIn, await _stashStdIn, or Promise.all rejections
+      if (tmpFile && require('fs').existsSync(tmpFile)) { // Ensure tmpFile exists before unlinking
+        unlinkSync(tmpFile);
+      }
+      const customErr = err as CustomError;
+      if (customErr.code && typeof customErr.code === 'string') {
+        const filename = customErr.filename || (customErr.path ? String(customErr.path).split('/').pop() : 'unknown file');
+        if (customErr.code === 'ENOENT') {
+          this.error(`Error: Input file not found: ${filename}`);
           return;
         }
-        // For errors from Encrypt/Decrypt or other generic errors
-        this.error(customErr.message || `${customErr.name || 'Error'}: An unknown error occurred`);
-      });
+        if (customErr.code === 'EACCES') {
+          this.error(`Error: Permission denied for file: ${filename}`);
+          return;
+        }
+        this.error(`${customErr.name} (${customErr.code}) for file ${filename}: ${customErr.message.replace(`${customErr.code}: `, '')}`);
+        return;
+      }
+      this.error(customErr.message || `${customErr.name || 'Error'}: An unknown error occurred`);
+    }
   }
 
   /**
@@ -274,7 +278,7 @@ Arguments:
     }
     return createWriteStream(outfile);
   }
-  private _promptSecret(prompt: string): Promise<string> {
+  private async _promptSecret(prompt: string): Promise<string> { // Added async
     const BACKSPACE = String.fromCharCode(127);
     return new Promise((resolve) => {
       const stdin = process.stdin;
@@ -335,21 +339,19 @@ Arguments:
       stdin.on('data', onData);
     });
   }
-  private _getPasswordOnStdIn(): Promise<string> {
-    let pass = '';
-    return this._promptSecret('Enter password: ')
-      .then(password => {
-        pass = password;
-        return this._promptSecret('Re-Enter password: ');
-      })
-      .then(verify => {
-        if (pass !== verify) {
-          this.error("Error: Passwords don't match.");
-        }
-        return pass;
-      });
+  private async _getPasswordOnStdIn(): Promise<string> { // Made async
+    const pass = await this._promptSecret('Enter password: ');
+    const verify = await this._promptSecret('Re-Enter password: ');
+    if (pass !== verify) {
+      this.error("Error: Passwords don't match.");
+      // process.exit(1) is called by this.error, so no explicit return needed to stop execution.
+      // However, to satisfy TypeScript's control flow analysis if this.error didn't exit:
+      throw new Error("Passwords don't match."); // Or return a rejected promise if not exiting.
+    }
+    return pass;
   }
-  private _stashStdIn(): Promise<string> {
+
+  private async _stashStdIn(): Promise<string> { // Added async
     return new Promise((resolve, reject) => {
       const from = process.stdin;
       const outfile = pathJoin(

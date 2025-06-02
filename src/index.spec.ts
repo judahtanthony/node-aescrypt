@@ -42,20 +42,23 @@ const KNOWN_TEST_FILE =
 const KNOWN_TEST_PASSWORD = 'test';
 const KNOWN_CONTENTS = 'test\n';
 
-test('Encrypt: should create an AES encrypted file', (t) =>
-  Encrypt.buffer(KNOWN_TEST_PASSWORD, Buffer.from(KNOWN_CONTENTS)).then(
-    (contents) => {
-      t.is(contents.slice(0, 3).toString(), 'AES');
-    }
-  ));
+test('Encrypt: should create an AES encrypted file', async (t) => {
+  // Made async
+  const contents = await Encrypt.buffer(
+    KNOWN_TEST_PASSWORD,
+    Buffer.from(KNOWN_CONTENTS)
+  );
+  t.is(contents.slice(0, 3).toString(), 'AES');
+});
 
-test('Decrypt: should be able to decrypt an AES encrypted file', (t) =>
-  Decrypt.buffer(
+test('Decrypt: should be able to decrypt an AES encrypted file', async (t) => {
+  // Made async
+  const contents = await Decrypt.buffer(
     KNOWN_TEST_PASSWORD,
     Buffer.from(KNOWN_TEST_FILE, 'base64')
-  ).then((contents) => {
-    t.is(contents.toString(), KNOWN_CONTENTS);
-  }));
+  );
+  t.is(contents.toString(), KNOWN_CONTENTS);
+});
 
 test('Encrypt-Decrypt: should get the same contents after decrypting then before encrypting', (t: ExecutionContext) => {
   const s = toStream(KNOWN_CONTENTS);

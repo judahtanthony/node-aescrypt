@@ -72,10 +72,44 @@ export function toStream(contents: Buffer | string): Readable {
  * @param transformInstance - An instance of a Transform stream (e.g., Encrypt or Decrypt).
  * @returns A Promise that resolves with the processed buffer or rejects on error.
  */
-export function processBufferWithTransform(
+export async function processBufferWithTransform(
   buffer: Buffer,
   transformInstance: Transform
 ): Promise<Buffer> {
+  // This function is a bit tricky to fully convert to async/await
+  // because it's fundamentally about managing stream piping and events.
+  // The core of it, `toStream(...).pipe(...).pipe(...).on('error',...)`,
+  // is event-driven. A direct async/await conversion would look like
+  // wrapping the new Promise part, which is what we already have.
+  //
+  // However, we can make the internal callback part of withStream potentially
+  // more modern if withStream itself returned a Promise, but withStream is
+  // designed to be a Writable stream constructor passed a callback.
+  //
+  // For this function, the existing Promise structure is already quite clean
+  // for stream operations. An alternative using async/await would involve
+  // promisifying the stream pipeline, e.g., using stream.pipeline or stream/promises.
+  //
+  // Let's use stream.pipeline from 'stream/promises' for a more modern approach.
+  // This requires Node.js v15.0.0+. Given current project settings (Node >=8.9)
+  // and recent yargs compatibility issues (requiring Node 18 for latest yargs),
+  // assuming Node 15+ for stream/promises is reasonable for an internal refactor
+  // that doesn't change external API. If Node version is a strict constraint below 15,
+  // the original Promise structure is fine.
+  //
+  // For now, I will stick to the existing Promise structure as it's clear and
+  // converting fully to stream/promises might be a larger refactor than intended
+  // for "use async/await syntax" if it means replacing the helper `withStream`.
+  // The primary benefit of async/await is avoiding .then().catch() chains, which
+  // this function itself doesn't have externally, but rather *provides* a Promise.
+  //
+  // If the goal is simply to use the `async` keyword on the function and `await`
+  // where possible, the current structure is already the most common way to
+  // promisify event-based operations like streams if not using `stream/promises`.
+  //
+  // Let's assume the task implies converting .then/.catch in callers,
+  // and for Promise *constructors* like this, it's already in the "awaitable" form.
+  // No change needed here for now unless a deeper stream handling refactor is desired.
   return new Promise((resolve, reject) => {
     toStream(buffer)
       .pipe(transformInstance)
