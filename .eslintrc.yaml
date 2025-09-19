@@ -1,15 +1,24 @@
 ---
-  extends: airbnb-base
+  extends:
+    - eslint:recommended
+    - plugin:@typescript-eslint/recommended
+    - prettier
   env:
     node: true
     mocha: true
     es6: true
-  parser: typescript-eslint-parser
+  parser: '@typescript-eslint/parser'
   parserOptions:
     sourceType: module
     ecmaFeatures:
       modules: true
   rules:
+    '@typescript-eslint/no-explicit-any': 0
+    'max-len': 0
+    'no-case-declarations': 0
+    'semi': 0
+    'space-before-function-paren': 0
+    'arrow-parens': 0
     generator-star-spacing:
       - 2
       - before: true
@@ -22,28 +31,9 @@
     comma-dangle: 0
     no-underscore-dangle: 0
     no-control-regex: 0
-    import/no-extraneous-dependencies:
-      - 2
-      - devDependencies: true
     func-names: 0
     no-unused-expressions: 0
     prefer-arrow-callback: 1
     no-use-before-define:
       - 2
       - functions: false
-    space-before-function-paren:
-      - 2
-      - always
-    max-len:
-      - 2
-      - 120
-      - 2
-    semi:
-      - 2
-      - never
-    strict:
-      - 2
-      - global
-    arrow-parens:
-      - 2
-      - always
