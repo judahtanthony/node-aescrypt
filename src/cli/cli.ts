@@ -5,7 +5,7 @@ import meow from 'meow';
 import { tmpdir } from 'os';
 import { join as pathJoin } from 'path';
 import { Readable, Writable } from 'stream';
-import { Decrypt, Encrypt } from '../index';
+import { Decrypt, Encrypt } from '../index.js';
 
 const CLI_HELP_TEXT = `
 Usage
@@ -196,7 +196,7 @@ class CLI {
             process.stdout.write('\n');
             process.exit();
             break;
-          case BACKSPACE:
+          case BACKSPACE: {
             password = password.slice(0, password.length - 1);
             const tmp: any = stdout;
             tmp.clearLine();
@@ -209,6 +209,7 @@ class CLI {
                 .join('')
             );
             break;
+          }
           default:
             // More passsword characters
             process.stdout.write('*');

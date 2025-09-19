@@ -6,9 +6,9 @@
   "bin": {
     "aescrypt": "./bin/aescrypt"
   },
-  "main": "build/main/index.js",
-  "typings": "build/main/index.d.ts",
-  "module": "build/module/index.js",
+  "type": "module",
+  "main": "build/module/index.js",
+  "types": "build/module/index.d.ts",
   "repository": "https://github.com/judahtanthony/node-aescrypt",
   "license": "MIT",
   "keywords": [
@@ -25,14 +25,12 @@
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
-    "fix": "run-s fix:*",
-    "fix:prettier": "eslint src/**/*.ts --fix",
-    "fix:eslint": "eslint src/**/*.ts --fix",
+    "fix": "eslint src/**/*.ts --fix",
     "test": "run-s build test:*",
     "test:lint": "eslint src/**/*.ts",
     "test:unit": "vitest run",
-    "test:watch": "vitest --watch",
-    "test:coverage": "vitest run --coverage",
+    "watch": "vitest --watch",
+    "coverage": "vitest run --coverage",
     "cov:html": "vitest run --coverage --reporter=html && open-cli coverage/index.html",
     "cov:lcov": "vitest run --coverage --reporter=lcov",
     "cov:send": "vitest run --coverage --reporter=lcov && codecov",
@@ -60,7 +58,7 @@
     "prepare-release": "One-step: clean, build, test, publish docs, and prep a release"
   },
   "engines": {
-    "node": ">=8.9"
+    "node": ">=18"
   },
   "dependencies": {
     "meow": "^7.0.1"
@@ -72,13 +70,13 @@
     "@typescript-eslint/parser": "^6.0.0",
     "@vitest/coverage-v8": "3.2.4",
     "@vitest/ui": "3.2.4",
-    "codecov": "^3.1.0",
     "cz-conventional-changelog": "^2.1.0",
-    "eslint": "^8.0.0",
+    "eslint": "^9.35.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.0.0",
     "gh-pages": "^5.0.0",
+    "glob": "^11.0.3",
     "npm-run-all": "^4.1.5",
     "npm-scripts-info": "^0.3.9",
     "open-cli": "^6.0.1",
@@ -86,16 +84,12 @@
     "standard-version": "^9.5.0",
     "typedoc": "^0.17.8",
     "typescript": "^5.9.2",
+    "uuid": "^13.0.0",
     "vitest": "^3.2.4"
   },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  },
-  "greenkeeper": {
-    "ignore": [
-      "@types/node"
-    ]
   }
 }

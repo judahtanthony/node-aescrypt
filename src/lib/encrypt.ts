@@ -10,7 +10,7 @@ import {
   TransformCallback,
   VERSION,
   withStream,
-} from './util';
+} from './util.js';
 
 interface EncryptionCredentials {
   readonly credIV: Buffer;

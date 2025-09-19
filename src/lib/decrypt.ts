@@ -8,7 +8,7 @@ import {
   toStream,
   TransformCallback,
   withStream,
-} from './util';
+} from './util.js';
 
 /**
  * Decrypt a Buffer that is in the AES Crypt file format.

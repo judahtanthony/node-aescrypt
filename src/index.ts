@@ -1,10 +1,10 @@
-import { Decrypt } from './lib/decrypt';
-import { Encrypt } from './lib/encrypt';
-import { toStream, withStream } from './lib/util';
+import { Decrypt } from './lib/decrypt.js';
+import { Encrypt } from './lib/encrypt.js';
+import { toStream, withStream } from './lib/util.js';
 
-export { Encrypt } from './lib/encrypt';
-export { Decrypt } from './lib/decrypt';
-export { toStream, withStream } from './lib/util';
+export { Encrypt } from './lib/encrypt.js';
+export { Decrypt } from './lib/decrypt.js';
+export { toStream, withStream } from './lib/util.js';
 export default {
   Decrypt,
   Encrypt,
