@@ -68,6 +68,7 @@
   },
   "devDependencies": {
     "@types/meow": "^4.0.1",
+    "@types/node": "^24.5.2",
     "ava": "6.3.0",
     "codecov": "^3.1.0",
     "cz-conventional-changelog": "^2.1.0",
@@ -83,16 +84,18 @@
     "tslint-config-prettier": "^1.17.0",
     "tslint-immutable": "^6.0.1",
     "typedoc": "^0.17.8",
-    "typescript": "^3.9.7"
+    "typescript": "^5.9.2"
   },
   "ava": {
     "failFast": true,
     "files": [
       "build/main/**/*.spec.js"
     ],
-    "ignoredByWatcher": [
-      "build/main/**/*.js"
-    ]
+    "watchMode": {
+      "ignoreChanges": [
+        "build/main/**/*.js"
+      ]
+    }
   },
   "config": {
     "commitizen": {

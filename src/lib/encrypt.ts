@@ -1,5 +1,6 @@
-import { Cipher, createCipheriv, Hmac, randomBytes } from 'crypto';
+import { Cipheriv, createCipheriv, Hmac, randomBytes } from 'crypto';
 import { Transform } from 'stream';
+import { Buffer } from 'buffer';
 import {
   AESCRYPT_FILE_FORMAT_VERSION,
   getHMAC,
@@ -43,7 +44,7 @@ export class Encrypt extends Transform {
   }
 
   private password: string;
-  private cipher: Cipher | null;
+  private cipher: Cipheriv | null;
   private hmac: Hmac | null;
   private contentLength: number;
 
@@ -117,8 +118,6 @@ export class Encrypt extends Transform {
       this.cipher = this._getCipher(credentials.encKey, credentials.encIV);
       this.hmac = getHMAC(credentials.encKey);
 
-      delete this.password; // Don't need this anymore.
-
       return true;
     }
     return false;
@@ -184,7 +183,7 @@ export class Encrypt extends Transform {
     this.push(credBlock);
     this.push(credHMAC);
   }
-  private _getCipher(key: Buffer, iv: Buffer): Cipher {
+  private _getCipher(key: Buffer, iv: Buffer): Cipheriv {
     const encCipher = createCipheriv('aes-256-cbc', key, iv);
     encCipher.setAutoPadding(false);
     return encCipher;

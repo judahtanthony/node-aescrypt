@@ -1,5 +1,6 @@
-import { createDecipheriv, Decipher, Hmac } from 'crypto';
+import { createDecipheriv, Decipheriv, Hmac } from 'crypto';
 import { Transform } from 'stream';
+import { Buffer } from 'buffer';
 import {
   AESCRYPT_FILE_FORMAT_VERSION,
   getHMAC,
@@ -46,7 +47,7 @@ export class Decrypt extends Transform {
   }
 
   private password: string;
-  private decipher: Decipher | null;
+  private decipher: Decipheriv | null;
   private hmac: Hmac | null;
   private mode: number;
   private buffer: Buffer;
@@ -224,15 +225,12 @@ export class Decrypt extends Transform {
       // Create our main workhorses using the decrypted credentials.
       this.decipher = this._getDecipher(encKey, encIV);
       this.hmac = getHMAC(encKey);
-
-      delete this.password; // Don't need this anymore.
-
       this.buffer = this.buffer.slice(96);
       this.mode = Decrypt.MODE_DECRYPT;
     }
     return null;
   }
-  private _getDecipher(key: Buffer, iv: Buffer): Decipher {
+  private _getDecipher(key: Buffer, iv: Buffer): Decipheriv {
     const encDecipher = createDecipheriv('aes-256-cbc', key, iv);
     encDecipher.setAutoPadding(false);
     return encDecipher;
