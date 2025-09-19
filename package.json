@@ -26,10 +26,10 @@
     "build:main": "tsc -p tsconfig.json",
     "build:module": "tsc -p tsconfig.module.json",
     "fix": "run-s fix:*",
-    "fix:prettier": "prettier \"src/**/*.ts\" --write",
+    "fix:prettier": "eslint src/**/*.ts --fix",
     "fix:eslint": "eslint src/**/*.ts --fix",
     "test": "run-s build test:*",
-    "test:lint": "eslint src/**/*.ts && prettier --check src/**/*.ts",
+    "test:lint": "eslint src/**/*.ts",
     "test:unit": "nyc --silent ava",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "cov": "run-s build test:unit cov:html && open-cli coverage/index.html",
@@ -83,7 +83,6 @@
     "npm-scripts-info": "^0.3.9",
     "nyc": "^15.1.0",
     "open-cli": "^6.0.1",
-    "prettier": "^1.15.2",
     "rimraf": "^6.0.1",
     "standard-version": "^9.5.0",
     "typedoc": "^0.17.8",
@@ -104,10 +103,6 @@
     "ignore": [
       "@types/node"
     ]
-  },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "es5"
   },
   "nyc": {
     "exclude": [
