@@ -7,7 +7,7 @@ import { Buffer } from 'buffer';
 const readPackageJson = (path: string) =>
   JSON.parse(readFileSync(path, 'utf8'));
 
-const pkg = readPackageJson(pathResolve(__dirname, '../../../package.json'));
+const pkg = readPackageJson(pathResolve(__dirname, '../../package.json'));
 
 export const NAME = pkg.name;
 export const VERSION = pkg.version;

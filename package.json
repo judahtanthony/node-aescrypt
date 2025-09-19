@@ -30,13 +30,12 @@
     "fix:eslint": "eslint src/**/*.ts --fix",
     "test": "run-s build test:*",
     "test:lint": "eslint src/**/*.ts",
-    "test:unit": "nyc --silent ava",
-    "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
-    "cov": "run-s build test:unit cov:html && open-cli coverage/index.html",
-    "cov:html": "nyc report --reporter=html",
-    "cov:send": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "cov:check": "nyc report && nyc check-coverage --lines 90",
-    "cov:check-strict": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
+    "test:unit": "vitest run",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage",
+    "cov:html": "vitest run --coverage --reporter=html && open-cli coverage/index.html",
+    "cov:lcov": "vitest run --coverage --reporter=lcov",
+    "cov:send": "vitest run --coverage --reporter=lcov && codecov",
     "doc": "run-s doc:html && open-cli build/docs/index.html",
     "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
     "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
@@ -71,7 +70,8 @@
     "@types/node": "^24.5.2",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "ava": "6.3.0",
+    "@vitest/coverage-v8": "3.2.4",
+    "@vitest/ui": "3.2.4",
     "codecov": "^3.1.0",
     "cz-conventional-changelog": "^2.1.0",
     "eslint": "^8.0.0",
@@ -81,18 +81,12 @@
     "gh-pages": "^5.0.0",
     "npm-run-all": "^4.1.5",
     "npm-scripts-info": "^0.3.9",
-    "nyc": "^15.1.0",
     "open-cli": "^6.0.1",
     "rimraf": "^6.0.1",
     "standard-version": "^9.5.0",
     "typedoc": "^0.17.8",
-    "typescript": "^5.9.2"
-  },
-  "ava": {
-    "failFast": true,
-    "files": [
-      "build/main/**/*.spec.js"
-    ]
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
   },
   "config": {
     "commitizen": {
@@ -102,11 +96,6 @@
   "greenkeeper": {
     "ignore": [
       "@types/node"
-    ]
-  },
-  "nyc": {
-    "exclude": [
-      "**/*.spec.js"
     ]
   }
 }

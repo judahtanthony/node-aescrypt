@@ -1,4 +1,4 @@
-import test from 'ava';
+import { describe, it, expect } from 'vitest';
 import { Readable, Writable } from 'stream';
 import { Decrypt } from './lib/decrypt';
 import { Encrypt } from './lib/encrypt';
@@ -42,60 +42,50 @@ const KNOWN_TEST_FILE =
 const KNOWN_TEST_PASSWORD = 'test';
 const KNOWN_CONTENTS = 'test\n';
 
-test('Encrypt: should create an AES encrypted file', t =>
-  Encrypt.buffer(KNOWN_TEST_PASSWORD, Buffer.from(KNOWN_CONTENTS)).then(
-    contents => {
-      t.is(contents.slice(0, 3).toString(), 'AES');
-    }
-  ));
-test('Encrypt Async: should create an AES encrypted file', async t => {
-  const contents = await Encrypt.buffer(
-    KNOWN_TEST_PASSWORD,
-    Buffer.from(KNOWN_CONTENTS)
-  );
-  t.is(contents.slice(0, 3).toString(), 'AES');
-});
-
-test('Decrypt: should be able to decrypt an AES encrypted file', t =>
-  Decrypt.buffer(
-    KNOWN_TEST_PASSWORD,
-    Buffer.from(KNOWN_TEST_FILE, 'base64')
-  ).then(contents => {
-    t.is(contents.toString(), KNOWN_CONTENTS);
-  }));
-test('Decrypt Async: should be able to decrypt an AES encrypted file', async t => {
-  const contents = await Decrypt.buffer(
-    KNOWN_TEST_PASSWORD,
-    Buffer.from(KNOWN_TEST_FILE, 'base64')
-  );
-  t.is(contents.toString(), KNOWN_CONTENTS);
-});
-
-test('Encrypt-Decrypt: should get the same contents after decrypting then before encrypting', async t => {
-  await new Promise<void>((resolve, reject) => {
-    const s = toStream(KNOWN_CONTENTS);
-    const w = withStream(contents => {
-      t.is(contents.toString(), KNOWN_CONTENTS);
-      resolve();
-    });
-    s.pipe(new Encrypt(KNOWN_TEST_PASSWORD))
-      .pipe(new Decrypt(KNOWN_TEST_PASSWORD))
-      .pipe(w)
-      .on('error', reject);
+describe('Encrypt', () => {
+  it('should create an AES encrypted file', async () => {
+    const contents = await Encrypt.buffer(KNOWN_TEST_PASSWORD, Buffer.from(KNOWN_CONTENTS));
+    expect(contents.slice(0, 3).toString()).toBe('AES');
   });
 });
 
-test('Encrypt-Decrypt: should be able to encrypt/decrypt large random files', async t => {
-  const expectedLength = 1000000;
-  await new Promise<void>((resolve, reject) => {
-    const s = getRandomReadable(expectedLength);
-    const w = getLengthWritable(actualLength => {
-      t.is(expectedLength, actualLength);
-      resolve();
+describe('Decrypt', () => {
+  it('should be able to decrypt an AES encrypted file', async () => {
+    const contents = await Decrypt.buffer(
+      KNOWN_TEST_PASSWORD,
+      Buffer.from(KNOWN_TEST_FILE, 'base64')
+    );
+    expect(contents.toString()).toBe(KNOWN_CONTENTS);
+  });
+});
+
+describe('Encrypt-Decrypt', () => {
+  it('should get the same contents after decrypting then before encrypting', async () => {
+    await new Promise<void>((resolve, reject) => {
+      const s = toStream(KNOWN_CONTENTS);
+      const w = withStream(contents => {
+        expect(contents.toString()).toBe(KNOWN_CONTENTS);
+        resolve();
+      });
+      s.pipe(new Encrypt(KNOWN_TEST_PASSWORD))
+        .pipe(new Decrypt(KNOWN_TEST_PASSWORD))
+        .pipe(w)
+        .on('error', reject);
     });
-    s.pipe(new Encrypt(KNOWN_TEST_PASSWORD))
-      .pipe(new Decrypt(KNOWN_TEST_PASSWORD))
-      .pipe(w)
-      .on('error', reject);
+  });
+
+  it('should be able to encrypt/decrypt large random files', async () => {
+    const expectedLength = 1000000;
+    await new Promise<void>((resolve, reject) => {
+      const s = getRandomReadable(expectedLength);
+      const w = getLengthWritable(actualLength => {
+        expect(actualLength).toBe(expectedLength);
+        resolve();
+      });
+      s.pipe(new Encrypt(KNOWN_TEST_PASSWORD))
+        .pipe(new Decrypt(KNOWN_TEST_PASSWORD))
+        .pipe(w)
+        .on('error', reject);
+    });
   });
 });
