@@ -32,8 +32,6 @@
     "watch": "vitest --watch",
     "coverage": "vitest run --coverage",
     "cov:html": "vitest run --coverage --reporter=html && open-cli coverage/index.html",
-    "cov:lcov": "vitest run --coverage --reporter=lcov",
-    "cov:send": "vitest run --coverage --reporter=lcov && codecov",
     "doc": "run-s doc:html && open-cli build/docs/index.html",
     "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
     "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
